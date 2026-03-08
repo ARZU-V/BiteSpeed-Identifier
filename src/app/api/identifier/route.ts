@@ -53,5 +53,5 @@ export async function POST(req: Request) {
         secondaryContactIds: all.filter(r => r.linkPrecedence === 'secondary').map(r => r.id)
       }
     });
-  } catch (e) { return NextResponse.json({ error: 'Internal Error' }, { status: 500 }); }
+  } catch (e) { console.error('[/api/identifier]', e); return NextResponse.json({ error: 'Internal Error' }, { status: 500 }); }
 }
