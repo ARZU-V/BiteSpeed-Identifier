@@ -1,36 +1,40 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🔗 Bitespeed Identity Reconciler
 
-## Getting Started
+A robust backend service built with **Next.js** and **Prisma 7** that reconciles multiple customer contact points into a single "Identity" profile. This service was designed to solve the identity linkage problem where a single user may interact with a platform using different email and phone combinations.
 
-First, run the development server:
+## 🚀 The Mission
+The goal is to consolidate disparate contact records into a unified response. If a user provides an email or phone number that matches an existing record, the system links them. It also handles the "Bridge" case, where two previously separate primary accounts are linked by a new piece of information and must be merged.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🛠️ Tech Stack
+* **Framework:** [Next.js 15+](https://nextjs.org/) (App Router)
+* **Database:** PostgreSQL (Hosted on Neon/Supabase)
+* **ORM:** [Prisma 7](https://www.prisma.io/docs/orm/reference/prisma-7-migration-guide)
+* **Driver:** Node-Postgres (`pg`) with Driver Adapters
+* **Language:** TypeScript
+* **Runner:** `tsx` for modern ESM execution
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🏗️ Architecture & Features
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### **Identity Reconciliation Algorithm**
+1.  **Search:** Queries the database for any existing contacts matching the provided email or phone number.
+2.  **Creation:** If no match exists, a new `primary` contact is created.
+3.  **Linkage:** If matches are found, the system identifies the oldest `primary` contact as the "Root."
+4.  **The Merge (Bridge Case):** If a request overlaps with two different primary clusters, the newer cluster is converted to `secondary` and linked to the older root.
+5.  **Consolidation:** Returns a clean JSON response containing unique emails, phone numbers, and secondary IDs.
 
-## Learn More
+### **Prisma 7 Implementation**
+This project utilizes the latest **Prisma 7** features, including:
+* **Configuration Decoupling:** Connection URLs moved from `schema.prisma` to `prisma.config.ts`.
+* **Rust-free Driver Adapters:** Using `@prisma/adapter-pg` for improved performance and edge compatibility.
+* **Custom Output:** Client generation redirected to `src/generated/prisma` for better project organization.
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🚦 Getting Started
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 1. Environment Setup
+Create a `.env` file in the root directory:
+```env
+DATABASE_URL="postgresql://user:password@host:port/dbname?sslmode=require"
