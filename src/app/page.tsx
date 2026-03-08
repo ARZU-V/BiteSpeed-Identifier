@@ -62,7 +62,7 @@ export default function Home() {
               <label className="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
               <input
                 type="email"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition text-gray-900"
                 placeholder="mcfly@hillvalley.edu"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -72,7 +72,7 @@ export default function Home() {
               <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
               <input
                 type="text"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition text-gray-900"
                 placeholder="123456"
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
